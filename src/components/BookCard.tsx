@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
 import { faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 interface BookCardProps {
   book: {
@@ -26,17 +27,21 @@ const BookCard: React.FC<BookCardProps> = ({ book, id }) => {
     ? book.authors.slice(0, 20).join(", ")
     : "";
 
+  const fallbackImage = "/illustration-of-book-icon.jpeg";
+
   const wholeStars = Math.floor(book.averageRating || 0);
   const halfStar = (book.averageRating || 0) % 1 >= 0.5;
 
   return (
-    <div className="flex flex-col sm:flex-row h-auto sm:h-64 w-full max-w-full shadow-xl bg-white dark:bg-gray-900 dark:shadow-cyan-900 rounded-lg overflow-hidden">
+    <div className="flex flex-col sm:flex-row h-auto sm:h-64 w-full max-w-full shadow-xl bg-white dark:bg-gray-900 dark:shadow-cyan-900 rounded-lg overflow-hidden hover:-translate-y-2.5">
       <div className="w-full sm:w-1/2 lg:w-1/3 h-48 sm:h-auto flex-none bg-cover rounded-l-lg overflow-hidden">
-        <img
-          src={book.imageLinks?.thumbnail}
-          alt="Book Cover"
-          className="w-full h-full object-cover"
-        />
+        <a href={`/search/book/${id}`}>
+          <img
+            src={book.imageLinks?.thumbnail || fallbackImage}
+            alt="Book Cover"
+            className="w-full h-full object-cover opacity-90 hover:opacity-100 hover:cursor-pointer"
+          />
+        </a>
       </div>
       <div className="w-full sm:w-1/2 lg:w-3/4 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between leading-normal">
         <div className="mb-4">

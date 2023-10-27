@@ -17,6 +17,7 @@ export interface InfoCardProps {
           description?: string | undefined;
           pageCount?: number | undefined;
           infoLink?: string | undefined;
+          previewLink?: string | undefined;
           categories: string;
         }
       | undefined;
@@ -43,12 +44,16 @@ const InfoCard: React.FC<InfoCardProps> = ({ bookItem, bookId }) => {
     return input?.replace(/<\/?p>/g, "") || "";
   };
 
+  const fallbackImage = "/illustration-of-book-icon.jpeg";
+
   return (
     <div className="flex flex-col md:flex-row justify-center items-center p-4 mt-16 mx-4 md:mx-44 space-y-4 md:space-y-0 md:space-x-4">
       <div
-        className="w-full md:w-246 h-64 md:h-370 bg-cover bg-center rounded-lg shadow-lg mb-4 md:mb-0"
+        className="w-full md:w-246 h-64 md:h-370 bg-cover bg-center rounded-lg shadow-lg mb-4 md:mb-0 hover:brightness-110 hover:contrast-110"
         style={{
-          backgroundImage: `url(${bookItem?.volumeInfo?.imageLinks?.thumbnail})`,
+          backgroundImage: `url(${
+            bookItem?.volumeInfo?.imageLinks?.thumbnail || fallbackImage
+          } )`,
         }}
       />
       <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-md w-full dark:bg-slate-900 dark:shadow-cyan-900">
@@ -69,10 +74,10 @@ const InfoCard: React.FC<InfoCardProps> = ({ bookItem, bookId }) => {
           {bookItem?.volumeInfo?.pageCount} Pages
         </p>
         <div className="flex flex-row justify-between ">
-          {bookItem?.volumeInfo?.infoLink ? (
+          {bookItem?.volumeInfo?.previewLink ? (
             <button className="p-2 w-24 bg-blue-500 text-white text-sm rounded hover:bg-blue-700 dark:bg-cyan-900 dark:hover:bg-cyan-800 hover:shadow-lg transition duration-200 mt-6">
               <a
-                href={bookItem.volumeInfo.infoLink}
+                href={bookItem?.volumeInfo.previewLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full h-full"
